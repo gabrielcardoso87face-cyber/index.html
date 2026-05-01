@@ -1135,7 +1135,7 @@ footer p { font-size: 0.78rem; color: var(--muted); }
   </div>
 </div>
 
-<!-- CTA FINAL -->
+<!-- CTA FINAL + FORMULÁRIO -->
 <section class="cta-section" id="cta">
   <div class="cta-glow"></div>
   <div class="big-freloo">FRELOO</div>
@@ -1145,17 +1145,265 @@ footer p { font-size: 0.78rem; color: var(--muted); }
     Chega de perder<br>
     <span class="italic">vaga no zap.</span>
   </h2>
-  <p class="reveal">Cadastre seu e-mail. A gente te avisa quando abrir — e você entra antes de todo mundo.</p>
+  <p class="reveal">Preencha seus dados. A gente te avisa quando abrir — e você entra antes de todo mundo.</p>
 
-  <div class="cta-form reveal">
-    <div class="input-wrap" id="formCta">
-      <input type="email" id="emailCta" placeholder="seu@email.com" autocomplete="email">
-      <button onclick="submit('emailCta','formCta','successCta')">Quero entrar grátis →</button>
-    </div>
+  <!-- FORMULÁRIO COMPLETO -->
+  <div class="full-form reveal" id="fullForm">
+    <form action="https://formspree.io/f/xrejgork" method="POST" id="mainForm" onsubmit="handleSubmit(event)">
+
+      <div class="form-row-2">
+        <div class="field-group">
+          <label>Nome completo</label>
+          <input type="text" name="nome" placeholder="Seu nome" required>
+        </div>
+        <div class="field-group">
+          <label>E-mail</label>
+          <input type="email" name="email" placeholder="seu@email.com" required>
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="field-group">
+          <label>WhatsApp</label>
+          <input type="tel" name="telefone" placeholder="(11) 99999-9999" id="phoneInput">
+        </div>
+        <div class="field-group">
+          <label>Você é</label>
+          <div class="toggle-group">
+            <label class="toggle-opt">
+              <input type="radio" name="tipo" value="Freelancer" required>
+              <span>💼 Freelancer</span>
+            </label>
+            <label class="toggle-opt">
+              <input type="radio" name="tipo" value="Contratante">
+              <span>🏢 Contratante</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Área de atuação</label>
+        <div class="area-grid">
+          <label class="area-opt"><input type="checkbox" name="area" value="Gastronomia"><span>🍽️ Gastronomia</span></label>
+          <label class="area-opt"><input type="checkbox" name="area" value="Eventos"><span>🎪 Eventos</span></label>
+          <label class="area-opt"><input type="checkbox" name="area" value="Varejo"><span>🛒 Varejo</span></label>
+          <label class="area-opt"><input type="checkbox" name="area" value="Logística"><span>🚚 Logística</span></label>
+          <label class="area-opt"><input type="checkbox" name="area" value="Hotelaria"><span>🏨 Hotelaria</span></label>
+          <label class="area-opt"><input type="checkbox" name="area" value="Promoções"><span>📣 Promoções</span></label>
+          <label class="area-opt"><input type="checkbox" name="area" value="Construção"><span>🏗️ Construção</span></label>
+          <label class="area-opt"><input type="checkbox" name="area" value="Design"><span>🎨 Design</span></label>
+          <label class="area-opt"><input type="checkbox" name="area" value="TI"><span>💻 TI</span></label>
+          <label class="area-opt"><input type="checkbox" name="area" value="Manutenção"><span>🔧 Manutenção</span></label>
+          <label class="area-opt"><input type="checkbox" name="area" value="Foto e Vídeo"><span>📸 Foto e Vídeo</span></label>
+          <label class="area-opt"><input type="checkbox" name="area" value="Administrativo"><span>💼 Administrativo</span></label>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        <span id="btnText">Quero entrar na lista grátis →</span>
+      </button>
+
+      <p class="form-fine">Gratuito para freelancers · Sem spam · Cancele quando quiser</p>
+    </form>
   </div>
-  <div class="success-box" id="successCta" style="display:none;margin:0 auto 20px;max-width:480px;">🎉 Você está na lista! Te avisamos no lançamento.</div>
-  <p class="cta-note reveal">Gratuito para freelancers · Sem spam · Cancele quando quiser</p>
+
+  <!-- SUCESSO -->
+  <div class="success-full" id="successFull">
+    <div class="success-icon">🎉</div>
+    <h3>Você está na lista!</h3>
+    <p>Te avisamos assim que a Freloo abrir. Fique de olho no seu e-mail.</p>
+  </div>
+
 </section>
+
+<style>
+/* FORM STYLES */
+.full-form {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.field-group input[type="text"],
+.field-group input[type="email"],
+.field-group input[type="tel"] {
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 13px 16px;
+  color: var(--white);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+.field-group input:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(255,77,0,0.1);
+}
+
+.field-group input::placeholder { color: rgba(255,252,248,0.2); }
+
+/* TOGGLE FREELANCER/CONTRATANTE */
+.toggle-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.toggle-opt {
+  cursor: pointer;
+}
+
+.toggle-opt input[type="radio"] { display: none; }
+
+.toggle-opt span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 13px 10px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(255,252,248,0.5);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.toggle-opt input[type="radio"]:checked + span {
+  border-color: var(--orange);
+  background: rgba(255,77,0,0.12);
+  color: var(--white);
+}
+
+.toggle-opt span:hover { border-color: rgba(255,77,0,0.3); color: var(--white); }
+
+/* AREA GRID */
+.field-group { margin-bottom: 14px; }
+
+.area-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.area-opt {
+  cursor: pointer;
+}
+
+.area-opt input[type="checkbox"] { display: none; }
+
+.area-opt span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 6px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.03);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255,252,248,0.45);
+  transition: all 0.15s;
+  cursor: pointer;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.area-opt input[type="checkbox"]:checked + span {
+  border-color: var(--orange);
+  background: rgba(255,77,0,0.12);
+  color: var(--white);
+}
+
+.area-opt span:hover { border-color: rgba(255,77,0,0.3); color: rgba(255,252,248,0.8); }
+
+/* SUBMIT */
+.submit-btn {
+  width: 100%;
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 8px;
+  letter-spacing: -0.01em;
+}
+.submit-btn:hover { background: var(--orange2); transform: translateY(-1px); }
+.submit-btn:active { transform: scale(0.99); }
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.form-fine {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 14px;
+}
+
+/* SUCCESS */
+.success-full {
+  display: none;
+  text-align: center;
+  padding: 60px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.success-icon { font-size: 3.5rem; margin-bottom: 20px; }
+
+.success-full h3 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+}
+
+.success-full p {
+  color: rgba(255,252,248,0.5);
+  font-size: 1rem;
+}
+
+@media (max-width: 640px) {
+  .form-row-2 { grid-template-columns: 1fr; }
+  .area-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
 
 <!-- FOOTER -->
 <footer>
@@ -1193,34 +1441,63 @@ const cObs = new IntersectionObserver(entries => {
 }, { threshold: 0.5 });
 cObs.observe(counterEl);
 
-// FORM SUBMIT
+// HERO FORM (email rápido — rola para o formulário completo)
 function submit(inputId, formId, msgId) {
-  const email = document.getElementById(inputId).value.trim();
-  const form = document.getElementById(formId);
-  const msg = document.getElementById(msgId);
+  const email = document.getElementById(inputId)?.value.trim();
   if (!email || !email.includes('@')) {
-    document.getElementById(inputId).focus();
-    document.getElementById(inputId).style.outline = '2px solid rgba(255,77,0,0.6)';
+    document.getElementById(inputId)?.focus();
     return;
   }
-  form.style.display = 'none';
-  msg.style.display = 'block';
-  n++;
-  counterEl.textContent = n.toLocaleString('pt-BR') + ' freelancers';
-  // sync both counters
-  if (inputId === 'emailCta') {
-    const m1 = document.getElementById('successMain');
-    if (m1) { document.getElementById('formMain').style.display = 'none'; m1.style.display = 'block'; }
-  }
+  // Pré-preenche o email no form completo e rola até ele
+  const emailField = document.querySelector('#mainForm input[type="email"]');
+  if (emailField) emailField.value = email;
+  document.getElementById('cta')?.scrollIntoView({ behavior: 'smooth' });
 }
 
-// ENTER KEY
-['emailMain','emailCta'].forEach((id, i) => {
-  const el = document.getElementById(id);
-  if (el) el.addEventListener('keydown', e => {
-    if (e.key === 'Enter') submit(id, i===0?'formMain':'formCta', i===0?'successMain':'successCta');
+// MÁSCARA DE TELEFONE
+const phoneInput = document.getElementById('phoneInput');
+if (phoneInput) {
+  phoneInput.addEventListener('input', function() {
+    let v = this.value.replace(/\D/g, '').substring(0, 11);
+    if (v.length > 6) v = '(' + v.substring(0,2) + ') ' + v.substring(2,7) + '-' + v.substring(7);
+    else if (v.length > 2) v = '(' + v.substring(0,2) + ') ' + v.substring(2);
+    else if (v.length > 0) v = '(' + v;
+    this.value = v;
   });
-});
+}
+
+// SUBMIT FORMULÁRIO COMPLETO
+async function handleSubmit(e) {
+  e.preventDefault();
+  const btn = document.querySelector('.submit-btn');
+  const btnText = document.getElementById('btnText');
+  btn.disabled = true;
+  btnText.textContent = 'Enviando...';
+
+  const form = e.target;
+  const data = new FormData(form);
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      document.getElementById('fullForm').style.display = 'none';
+      document.getElementById('successFull').style.display = 'block';
+      n++;
+      counterEl.textContent = n.toLocaleString('pt-BR') + ' freelancers';
+    } else {
+      btnText.textContent = 'Erro ao enviar. Tente novamente.';
+      btn.disabled = false;
+    }
+  } catch {
+    btnText.textContent = 'Erro de conexão. Tente novamente.';
+    btn.disabled = false;
+  }
+}
 </script>
 </body>
 </html>
