@@ -1149,7 +1149,7 @@ footer p { font-size: 0.78rem; color: var(--muted); }
 
   <!-- FORMULÁRIO COMPLETO -->
   <div class="full-form reveal" id="fullForm">
-    <form action="https://formspree.io/f/xrejgork" method="POST" id="mainForm" onsubmit="handleSubmit(event)">
+    <form action="https://script.google.com/macros/s/AKfycbyfBUplzO0M5KxJTgfx71ZVRwDovemEJctA3DJ2rWk1ORm0HAlQgj6guU0da-Ds8LcWIA/exec" method="POST" id="mainForm" onsubmit="handleSubmit(event)">
 
       <div class="form-row-2">
         <div class="field-group">
@@ -1466,7 +1466,9 @@ if (phoneInput) {
   });
 }
 
-// SUBMIT FORMULÁRIO COMPLETO
+// SUBMIT FORMULÁRIO — Google Sheets
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyfBUplzO0M5KxJTgfx71ZVRwDovemEJctA3DJ2rWk1ORm0HAlQgj6guU0da-Ds8LcWIA/exec';
+
 async function handleSubmit(e) {
   e.preventDefault();
   const btn = document.querySelector('.submit-btn');
@@ -1475,24 +1477,30 @@ async function handleSubmit(e) {
   btnText.textContent = 'Enviando...';
 
   const form = e.target;
-  const data = new FormData(form);
+  const areasSelecionadas = [...form.querySelectorAll('input[name="area"]:checked')]
+    .map(cb => cb.value).join(', ');
+
+  const payload = {
+    nome:     form.querySelector('input[name="nome"]').value.trim(),
+    email:    form.querySelector('input[name="email"]').value.trim(),
+    telefone: form.querySelector('input[name="telefone"]').value.trim(),
+    tipo:     form.querySelector('input[name="tipo"]:checked')?.value || '',
+    areas:    areasSelecionadas
+  };
 
   try {
-    const res = await fetch(form.action, {
+    await fetch(SHEETS_URL, {
       method: 'POST',
-      body: data,
-      headers: { 'Accept': 'application/json' }
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
     });
 
-    if (res.ok) {
-      document.getElementById('fullForm').style.display = 'none';
-      document.getElementById('successFull').style.display = 'block';
-      n++;
-      counterEl.textContent = n.toLocaleString('pt-BR') + ' freelancers';
-    } else {
-      btnText.textContent = 'Erro ao enviar. Tente novamente.';
-      btn.disabled = false;
-    }
+    document.getElementById('fullForm').style.display = 'none';
+    document.getElementById('successFull').style.display = 'block';
+    n++;
+    counterEl.textContent = n.toLocaleString('pt-BR') + ' freelancers';
+
   } catch {
     btnText.textContent = 'Erro de conexão. Tente novamente.';
     btn.disabled = false;
